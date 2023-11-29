@@ -1,0 +1,42 @@
+<div class="details-container">
+    <h1>Titulo: {{tought.title}}</h1>
+    <div class="informations">
+        <p>Autor: {{user.name}}</p>
+        <span>Curtidas: {{likesQty}}</span>
+        {{#if userLike}}
+            <form action="/toughts/addlike" method="POST" class="liked">
+                <input type="hidden" name="ToughtId" value="{{tought.id}}">
+                <button><i class="bi bi-heart-fill"></i></button>
+            </form>
+        {{else}}
+            <form action="/toughts/addlike" method="POST" class="unliked">
+                <input type="hidden" name="ToughtId" value="{{tought.id}}">
+                <button><i class="bi bi-heart-fill"></i></button>
+            </form>
+        {{/if}}
+    </div>
+</div>
+<div class="coments-container">
+    <h2>Comentários ({{comentsQty}}): </h2>
+    <form action="/toughts/addcoment" method="POST">
+        <input type="hidden" name="toughtId" value="{{tought.id}}">
+        <input type="text" name="title" placeholder="Digite o seu comentario...">
+        <input type="submit" value="Comentar">
+    </form>
+    <ul>
+        {{#each coments}}
+            <li>
+                <p>{{this.title}}</p>
+                <div class="informations">
+                    <span>Autor: {{this.User.name}}</span>
+                    <span>Curtidas: {{this.ComentLike}}</span>
+                    <form action="/toughts/addcomentlike" method="POST" class="unliked">
+                        <input type="hidden" name="ComentId" value="{{this.id}}">
+                        <input type="hidden" name="ToughtId" value="{{this.ToughtId}}">
+                        <button><i class="bi bi-heart-fill"></i></button>
+                    </form>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</div>
